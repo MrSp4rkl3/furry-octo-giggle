@@ -26,7 +26,7 @@ spec:
         - containerPort: 32400
         env:
         - name: ADVERTISE_IP
-          value: "http://192.168.1.247:32400/"
+          value: "http://192.168.1.237:32400/"
         - name: VERSION
           value: "latest"
         - name: PUID
