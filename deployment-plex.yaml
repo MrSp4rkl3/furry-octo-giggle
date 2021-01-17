@@ -20,7 +20,14 @@ spec:
         image: linuxserver/plex
         resources:
           limits:
-#            nvidia.com/gpu: 1
+            cpu: 250m
+            memory: 512Mi
+            nvidia.com/gpu: 1
+          requests:
+            cpu: 250m
+            memory: 512Mi
+            nvidia.com/gpu: 1
+#            gpu.intel.com/i915: 1
         imagePullPolicy: Always
         ports:
         - containerPort: 32400
@@ -35,15 +42,20 @@ spec:
           value: "65534"
         - name: TZ
           value: "America/Toronto"
+        - name: PLEX_CLAIM
+          valueFrom:
+            secretKeyRef:
+              name: plex-claim-token
+              key: token
         volumeMounts:
         - name: plex-data
           mountPath: /config
-        - name: plex-movies
-          mountPath: /movies
+        - name: plex-media
+          mountPath: /media
       volumes:
       - name: plex-data
         persistentVolumeClaim:
           claimName: plex-pv-config-claim
-      - name: plex-movies
+      - name: plex-media
         persistentVolumeClaim:
           claimName: plex-pv-media-claim
